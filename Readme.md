@@ -36,11 +36,19 @@ relative_to_trajectory_id: 0"
 
 We call this service to start a new trajectory relative to trajectory 0. Once the service is call we can press the `SPACE` bar in the first terminal to start the bag processing.
 
+### Saving second session
+
+The online modality does not save the .pbstream by default. Instead, we call the following service **few seconds** before the mapping process finishes:
+```
+$ rosservice call /write_state "filename: '<full-path-to>/2020-11-10-15-22-08.bag.pbstream'
+include_unfinished_submaps: true"
+```
+
 ## Third session
 
 We proceed similarly for the third session.
 
-We launch Cartographer in a first terminal. 
+We launch Cartographer in a first terminal. We provide the previous .pbstream that will contain the two previous trajectories and the new bag file to process.
 ```
 $ roslaunch beetle_cartographer demo_beetle_cartographer_multisession.launch  load_state_filename:=<full-path-to>/2020-11-10-15-22-08.bag.pbstream bag_filename:=<full-path-to>/2020-11-10-15-47-02.bag
 ```
